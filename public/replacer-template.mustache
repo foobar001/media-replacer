@@ -1,0 +1,83 @@
+<!-- BEGIN REPLACER CODE -->
+
+<script>
+
+  function replacePostImage(options) {
+    const mediaModalInfoWaiter = setInterval(() => {
+      if (typeof MEDIABYID === 'undefined') {
+        return;
+      }
+
+      const mediaContainer = document.querySelector(`figure:has(img[src='${options.imageFromPreviewUrl}'])`);
+
+      if (!mediaContainer) {
+        return;
+      }
+
+      const mediaKey = Object
+        .keys(Object.fromEntries(MEDIABYID))
+        .find((key) => MEDIABYID.get(key)._thumbSrc === options.imageFromPreviewUrl)
+
+      if (!mediaKey) {
+        return;
+      }
+
+      mediaContainer.querySelector('a.desktop').href = options.imageToUrl;
+      mediaContainer.querySelector('svg.js-post-saveimg').dataset.url = options.imageToUrl;
+      mediaContainer.querySelector('a.post__image-link').href = options.imageToUrl;
+
+      const previewNode = mediaContainer.querySelector('img.post__file-preview');
+      previewNode.src = options.imageToPreviewUrl;
+      previewNode.dataset.src = options.imageToUrl;
+      previewNode.width = options.width;
+      previewNode.height = options.height;
+      previewNode.dataset.width = options.dataWidth;
+      previewNode.dataset.height = options.dataHeight;
+      previewNode.dataset.mediaReplaced = true;
+
+      const mediaModalInfo = MEDIABYID.get(mediaKey);
+
+      mediaModalInfo._src = options.imageToUrl;
+      mediaModalInfo._imgW = options.dataWidth;
+      mediaModalInfo._imgH = options.dataHeight;
+
+      clearInterval(mediaModalInfoWaiter);
+    }, 200);
+  }
+
+  {{#replacers}}
+  replacePostImage({
+    imageFromPreviewUrl: '{{{metaFrom.thumb.relativeUrl}}}',
+    imageToUrl: '{{{metaTo.origin.relativeUrl}}}',
+    imageToPreviewUrl: '{{{metaTo.thumb.relativeUrl}}}',
+    width: {{{metaTo.thumb.width}}},
+    height: {{{metaTo.thumb.height}}},
+    dataWidth: {{{metaTo.origin.width}}},
+    dataHeight: {{{metaTo.origin.height}}},
+  });
+  {{/replacers}}
+
+</script>
+
+<style>
+  /* Скрываем оригинальные медиа-файлы */
+  {{#replacers}}
+  img[src='{{{metaFrom.thumb.relativeUrl}}}']:not([data-media-replaced]) {
+    display: none;
+  }
+
+  {{/replacers}}
+  {{#hiders}}
+  figure.post__image:has(img[src='{{{metaFrom.thumb.relativeUrl}}}']:not([data-media-replaced])) {
+    display: none;
+  }
+
+  {{/hiders}}
+
+  /* Костыль для фикса размера модалок у куклы */
+  .de-fullimg-center {
+    width: auto !important;
+  }
+</style>
+
+<!-- END REPLACER CODE -->

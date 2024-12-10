@@ -1,0 +1,73 @@
+<div [formGroup]="form" class="replacer">
+  <button class="replacer__delete-btn" (click)="removeReplacer()" title="Удалить замену">❌</button>
+  <div class="replacer__controls">
+    <div class="replacer__action">
+      Действие
+      <div class="radio-list">
+      <label class="radio">
+        <input
+          class="radio__input"
+          formControlName="action"
+          type="radio"
+          value="replace"
+        />
+        <span class="radio__label">Заменить</span>
+      </label>
+      <label class="radio">
+        <input
+          class="radio__input"
+          formControlName="action"
+          type="radio"
+          value="hide"
+        />
+        <span class="radio__label">Скрыть</span>
+      </label>
+    </div>
+    </div>
+    <div
+      class="input-wrap"
+      [class.input-wrap_valid]="(fromStatus$ | async) === 'valid'"
+      [class.input-wrap_invalid]="(fromStatus$ | async) === 'invalid'">
+      <label for="from">Исходный файл</label><br />
+      <input
+        class="text-input"
+        formControlName="from"
+        name="from"
+        type="text"
+        placeholder="https://2ch.hk/test/src/123/456789.png"
+        autocomplete="off"
+      />
+    </div>
+    <div
+      class="input-wrap"
+      [class.input-wrap_valid]="(toStatus$ | async) === 'valid'"
+      [class.input-wrap_invalid]="(toStatus$ | async) === 'invalid'"
+      [class.input-wrap_hidden]="form.get('to').disabled">
+      <label for="to">Новый файл</label><br />
+      <input
+        class="text-input"
+        formControlName="to"
+        name="to"
+        type="text"
+        placeholder="https://2ch.hk/test/src/123/456789.png"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+  <div class="preview">
+    <ng-container *ngIf="metaFrom$ | async as metaFrom">
+      <img
+        [src]="metaFrom.thumb.fullUrl"
+        class="preview__img"
+      />
+      <div *ngIf="form.controls.action.value === 'replace'" class="action-icon">➡️</div>
+      <div *ngIf="form.controls.action.value === 'hide'" class="action-icon">🗑️</div>
+    </ng-container>
+    <div *ngIf="metaTo$ | async as metaTo">
+      <img
+        [src]="metaTo.thumb.fullUrl"
+        class="preview__img"
+      />
+    </div>
+  </div>
+</div>

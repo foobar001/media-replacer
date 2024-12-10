@@ -1,0 +1,126 @@
+.replacer {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  background-color: #eeeeee;
+  padding: 8px;
+  border-radius: 2px;
+  min-height: 210px;
+
+  display: flex;
+  position: relative;
+
+  &__delete-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 32px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.24);
+    padding: 4px;
+    cursor: pointer;
+
+    box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
+      rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
+
+    transition: background 200ms;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid gray;
+    padding-right: 32px;
+
+    gap: 8px;
+  }
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  padding-left: 32px;
+  gap: 32px;
+
+  &__from::after {
+    content: 'a'
+  }
+}
+
+.action-icon {
+  font-size: 32px;
+}
+
+img {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.input-wrap {
+  visibility: inherit;
+  position: relative;
+
+  &_hidden {
+    visibility: hidden;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+
+  &_valid::after {
+    background: rgba(0,255,0,0.1)
+  }
+
+  &_invalid::after {
+    background: rgba(255,0,0,0.1)
+  }
+}
+
+.text-input {
+  width: 430px;
+  padding: 4px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  height: 20px;
+  font-size: 16px;
+
+  &:focus {
+    background-color: #fff;
+  }
+
+  &:disabled {
+    visibility: hidden;
+  }
+}
+
+.radio-list {
+  display: flex;
+  gap: 8px;
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+
+  &__input {
+    width: 20px;
+    height: 20px;
+    margin-left: 0;
+  }
+
+  &__label {
+    margin-top: 2px;
+  }
+}

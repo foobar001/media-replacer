@@ -1,0 +1,19 @@
+<div class="replacers-list">
+  @for (item of replacers | keyvalue; track item.key) {
+  <app-replacer
+    [id]="item.key | number"
+    (onUpdateMeta)="updateReplacer($event)"
+    (onRemoveReplacer)="removeReplacer(item.key)"
+  ></app-replacer>
+  }
+  <button (click)="addReplacer()">Добавить новую замену</button>
+  <button (click)="showReplacerCode()" class="show-code-btn">Показать код замены</button>
+
+  <div *ngIf="isReplacerCodeModalVisible" class="replacer-modal">
+    <div class="replacer-modal__overlay"></div>
+    <div class="replacer-modal__window">
+      <button (click)="hideReplacerCode()" class="replacer-modal__close-btn" title="Закрыть окно">❌</button>
+      <textarea id="replacerCodeTextarea" class="replacer-modal__content" readonly>{{ replacerCode }}</textarea>
+    </div>
+  </div>
+</div>
