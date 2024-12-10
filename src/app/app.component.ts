@@ -37,7 +37,7 @@ export class AppComponent {
   }
 
   showReplacerCode() {
-    fetch('/replacer-template.mustache')
+    fetch('./replacer-template.mustache')
       .then((res) => res.text())
       .then((template) => {
         const replacers = Object.values(this.replacers);
