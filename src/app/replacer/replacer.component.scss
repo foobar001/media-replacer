@@ -1,5 +1,4 @@
 .replacer {
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   background-color: #eeeeee;
   padding: 8px;
   border-radius: 2px;
@@ -44,10 +43,6 @@
   align-items: center;
   padding-left: 32px;
   gap: 32px;
-
-  &__from::after {
-    content: 'a'
-  }
 }
 
 .action-icon {
@@ -67,7 +62,7 @@ img {
   }
 
   &::after {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     top: 0;
@@ -78,11 +73,11 @@ img {
   }
 
   &_valid::after {
-    background: rgba(0,255,0,0.1)
+    background: rgba(0, 255, 0, 0.1);
   }
 
   &_invalid::after {
-    background: rgba(255,0,0,0.1)
+    background: rgba(255, 0, 0, 0.1);
   }
 }
 
