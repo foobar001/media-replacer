@@ -57,6 +57,15 @@ img {
   visibility: inherit;
   position: relative;
 
+  &__refresh-btn {
+    cursor: pointer;
+    border: none;
+    position: absolute;
+    right: 0px;
+    top: 23px;
+    background-color: transparent;
+  }
+
   &_hidden {
     visibility: hidden;
   }

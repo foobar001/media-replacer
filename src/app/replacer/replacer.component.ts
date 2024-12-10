@@ -65,9 +65,14 @@ export class ReplacerComponent implements OnInit, OnDestroy {
 
   private onDestroy$ = new Subject<void>();
 
-  metaFrom$ = this.form.controls.from.valueChanges.pipe(
+  private refreshFrom$ = new Subject<void>();
+
+  metaFrom$ = combineLatest([
+    this.form.controls.from.valueChanges,
+    this.refreshFrom$.pipe(startWith('')),
+  ]).pipe(
     tap(() => this.fromStatus$.next('unknown')),
-    switchMap((from) =>
+    switchMap(([from]) =>
       this.getImageFullMeta(from).pipe(
         catchError((err) => {
           this.fromStatus$.next('invalid');
@@ -84,9 +89,12 @@ export class ReplacerComponent implements OnInit, OnDestroy {
     startWith(this.form.controls.action.value)
   );
 
+  private refreshTo$ = new Subject<void>();
+
   metaTo$ = combineLatest([
     this.form.controls.to.valueChanges,
     this.action$,
+    this.refreshTo$.pipe(startWith(''))
   ]).pipe(
     tap(() => this.toStatus$.next('unknown')),
     switchMap(([to, action]) => {
@@ -128,6 +136,14 @@ export class ReplacerComponent implements OnInit, OnDestroy {
 
   removeReplacer() {
     this.onRemoveReplacer.emit(this.id);
+  }
+
+  retryRefreshFrom() {
+    this.refreshFrom$.next();
+  }
+
+  retryRefreshTo() {
+    this.refreshTo$.next();
   }
 
   private listenFullMetaInfoChange() {

@@ -37,6 +37,13 @@
         placeholder="https://2ch.hk/test/src/123/456789.png"
         autocomplete="off"
       />
+      <button
+        *ngIf="(fromStatus$ | async) === 'invalid'"
+        class="input-wrap__refresh-btn"
+        (click)="retryRefreshFrom()"
+        title="Повторить попытку">
+        🔄
+      </button>
     </div>
     <div
       class="input-wrap"
@@ -52,6 +59,13 @@
         placeholder="https://2ch.hk/test/src/123/456789.png"
         autocomplete="off"
       />
+      <button
+        *ngIf="(toStatus$ | async) === 'invalid'"
+        class="input-wrap__refresh-btn"
+        (click)="retryRefreshTo()"
+        title="Повторить попытку">
+        🔄
+      </button>
     </div>
   </div>
   <div class="preview">
