@@ -45,6 +45,20 @@
     }, 200);
   }
 
+  function replaceCatalogImage(options) {
+    setTimeout(() => {
+      const catalogPreviewNode = document.querySelector(`.ctlg__img img[src='${options.imageFromPreviewUrl}']`);
+        if (!catalogPreviewNode) {
+          return;
+        }
+
+        catalogPreviewNode.src = options.imageToPreviewUrl;
+        catalogPreviewNode.width = options.width;
+        catalogPreviewNode.height = options.height;
+        catalogPreviewNode.dataset.mediaReplaced = true;
+    }, 200);
+  }
+
   {{#replacers}}
   replacePostImage({
     imageFromPreviewUrl: '{{{metaFrom.thumb.relativeUrl}}}',
@@ -54,6 +68,12 @@
     height: {{{metaTo.thumb.height}}},
     dataWidth: {{{metaTo.origin.width}}},
     dataHeight: {{{metaTo.origin.height}}},
+  });
+  replaceCatalogImage({
+    imageFromPreviewUrl: '{{{metaFrom.thumb.relativeUrl}}}',
+    imageToPreviewUrl: '{{{metaTo.thumb.relativeUrl}}}',
+    width: {{{metaTo.thumb.width}}},
+    height: {{{metaTo.thumb.height}}},
   });
   {{/replacers}}
 
