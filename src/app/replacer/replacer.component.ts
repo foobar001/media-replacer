@@ -138,6 +138,10 @@ export class ReplacerComponent implements OnInit, OnDestroy {
     this.onRemoveReplacer.emit(this.id);
   }
 
+  setAction(action: ReplacerForm['action']) {
+    this.form.controls.action.setValue(action);
+  }
+
   retryRefreshFrom() {
     this.refreshFrom$.next();
   }

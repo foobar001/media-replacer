@@ -1,87 +1,111 @@
 <div [formGroup]="form" class="replacer">
-  <button class="replacer__delete-btn" (click)="removeReplacer()" title="Удалить замену">❌</button>
+  <button class="replacer__delete" (click)="removeReplacer()" title="Удалить замену" aria-label="Удалить замену">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 6l12 12M18 6L6 18"/>
+    </svg>
+  </button>
+
   <div class="replacer__controls">
-    <div class="replacer__action">
-      Действие
-      <div class="radio-list">
-      <label class="radio">
-        <input
-          class="radio__input"
-          formControlName="action"
-          type="radio"
-          value="replace"
-        />
-        <span class="radio__label">Заменить</span>
-      </label>
-      <label class="radio">
-        <input
-          class="radio__input"
-          formControlName="action"
-          type="radio"
-          value="hide"
-        />
-        <span class="radio__label">Скрыть</span>
-      </label>
+    <div class="field">
+      <span class="field__label">Действие</span>
+      <div class="segment">
+        <button
+          type="button"
+          class="segment__btn"
+          [class.segment__btn_active]="form.controls.action.value === 'replace'"
+          (click)="setAction('replace')"
+        >Заменить</button>
+        <button
+          type="button"
+          class="segment__btn"
+          [class.segment__btn_active]="form.controls.action.value === 'hide'"
+          (click)="setAction('hide')"
+        >Скрыть</button>
+      </div>
     </div>
-    </div>
+
     <div
-      class="input-wrap"
-      [class.input-wrap_valid]="(fromStatus$ | async) === 'valid'"
-      [class.input-wrap_invalid]="(fromStatus$ | async) === 'invalid'">
-      <label for="from">Исходный файл</label><br />
+      class="field input-wrap"
+      [class.input-wrap--valid]="(fromStatus$ | async) === 'valid'"
+      [class.input-wrap--invalid]="(fromStatus$ | async) === 'invalid'"
+    >
+      <label class="field__label" [attr.for]="'from-' + id">Исходный файл</label>
       <input
         class="text-input"
         formControlName="from"
-        name="from"
+        [attr.id]="'from-' + id"
         type="text"
-        placeholder="https://2ch.hk/test/src/123/456789.png"
+        placeholder="https://2ch.su/b/src/123/456789.png"
         autocomplete="off"
+        spellcheck="false"
       />
-      <button
-        *ngIf="(fromStatus$ | async) === 'invalid'"
-        class="input-wrap__refresh-btn"
-        (click)="retryRefreshFrom()"
-        title="Повторить попытку">
-        🔄
-      </button>
+      @if ((fromStatus$ | async) === 'invalid') {
+        <button class="input-wrap__refresh" (click)="retryRefreshFrom()" title="Повторить попытку" aria-label="Повторить попытку">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </button>
+      }
     </div>
+
     <div
-      class="input-wrap"
-      [class.input-wrap_valid]="(toStatus$ | async) === 'valid'"
-      [class.input-wrap_invalid]="(toStatus$ | async) === 'invalid'"
-      [class.input-wrap_hidden]="form.get('to').disabled">
-      <label for="to">Новый файл</label><br />
+      class="field input-wrap"
+      [class.input-wrap--hidden]="form.get('to').disabled"
+      [class.input-wrap--valid]="(toStatus$ | async) === 'valid'"
+      [class.input-wrap--invalid]="(toStatus$ | async) === 'invalid'"
+    >
+      <label class="field__label" [attr.for]="'to-' + id">Новый файл</label>
       <input
         class="text-input"
         formControlName="to"
-        name="to"
+        [attr.id]="'to-' + id"
         type="text"
-        placeholder="https://2ch.hk/test/src/123/456789.png"
+        placeholder="https://2ch.su/b/src/123/456789.png"
         autocomplete="off"
+        spellcheck="false"
       />
-      <button
-        *ngIf="(toStatus$ | async) === 'invalid'"
-        class="input-wrap__refresh-btn"
-        (click)="retryRefreshTo()"
-        title="Повторить попытку">
-        🔄
-      </button>
+      @if ((toStatus$ | async) === 'invalid') {
+        <button class="input-wrap__refresh" (click)="retryRefreshTo()" title="Повторить попытку" aria-label="Повторить попытку">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </button>
+      }
     </div>
   </div>
+
   <div class="preview">
-    <ng-container *ngIf="metaFrom$ | async as metaFrom">
-      <img
-        [src]="metaFrom.thumb.fullUrl"
-        class="preview__img"
-      />
-      <div *ngIf="form.controls.action.value === 'replace'" class="action-icon">➡️</div>
-      <div *ngIf="form.controls.action.value === 'hide'" class="action-icon">🗑️</div>
-    </ng-container>
-    <div *ngIf="metaTo$ | async as metaTo">
-      <img
-        [src]="metaTo.thumb.fullUrl"
-        class="preview__img"
-      />
+    <div class="preview__box">
+      @if (metaFrom$ | async; as metaFrom) {
+        <img [src]="metaFrom.thumb.fullUrl" alt="Превью исходного файла" />
+      } @else {
+        <span class="preview__placeholder">превью</span>
+      }
     </div>
+
+    @if (form.controls.action.value === 'replace') {
+      <span class="preview__icon">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </span>
+      <div class="preview__box">
+        @if (metaTo$ | async; as metaTo) {
+          <img [src]="metaTo.thumb.fullUrl" alt="Превью нового файла" />
+        } @else {
+          <span class="preview__placeholder">превью</span>
+        }
+      </div>
+    } @else {
+      <span class="preview__icon preview__icon--muted">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+          <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/>
+          <line x1="1" y1="1" x2="23" y2="23"/>
+        </svg>
+      </span>
+    }
   </div>
 </div>
