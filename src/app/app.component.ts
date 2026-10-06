@@ -63,7 +63,6 @@ export class AppComponent {
 
         this.replacerCode = Mustache.render(template, payload);
         this.isReplacerCodeModalVisible = true;
-        this.copyCode();
       });
   }
 
