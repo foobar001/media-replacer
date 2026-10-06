@@ -1,7 +1,142 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --bg: #16181d;
+  --surface: #1e222a;
+  --surface-2: #262b34;
+  --border: #313845;
+  --accent: #5b8def;
+  --accent-hover: #6f9cf5;
+  --text: #e8eaed;
+  --text-2: #9aa0aa;
+  --text-3: #5b6270;
+  --ok: #4caf7d;
+  --err: #e05561;
+  --radius: 10px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
-  background-color: rgba(0, 0, 0, 0.2);
-  font-family: monospace;
-  font-size: 16px;
+  height: 100%;
+}
+
+body {
   margin: 0;
+  background: radial-gradient(1200px 600px at 50% -100px, #1d222c 0%, var(--bg) 55%) fixed;
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, opacity 0.15s;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    background: var(--accent-hover);
+  }
+}
+
+.btn--ghost {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+
+  &:hover:not(:disabled) {
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+    color: #fff;
+  }
+}
+
+.btn--small {
+  height: 32px;
+  padding: 0 14px;
+}
+
+.btn--icon {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-2);
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+  }
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2d3440;
+  border-radius: 5px;
+  border: 2px solid var(--surface);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::selection {
+  background: rgba(91, 141, 239, 0.35);
+}
+
+.modal__code {
+  min-height: 100%;
+  background: #181a20;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.modal__code pre {
+  margin: 0;
+  padding: 14px 16px;
+  background: none;
+}
+
+.modal__code code.hljs {
+  background: none;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.6;
 }
