@@ -92,6 +92,11 @@
     display: none;
   }
 
+  .post__images_type_single:has(img[src='{{{metaFrom.thumb.relativeUrl}}}']:not([data-media-replaced])) + .post__message {
+    padding: 16px;
+    margin-left: 0;
+  }
+
   {{/hiders}}
 
   /* Костыль для фикса размера модалок у куклы */
