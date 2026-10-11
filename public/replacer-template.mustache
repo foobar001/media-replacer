@@ -92,6 +92,7 @@
     display: none;
   }
 
+  /* Отступ сообщения при скрытом медиа — как у поста без картинки */
   .post__images_type_single:has(img[src='{{{metaFrom.thumb.relativeUrl}}}']:not([data-media-replaced])) + .post__message {
     padding: 16px;
     margin-left: 0;
