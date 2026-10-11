@@ -80,14 +80,15 @@
 </script>
 
 <style>
-  /* Скрываем оригинальные медиа-файлы */
   {{#replacers}}
+  /* Скрываем оригинальные медиа-файлы */
   img[src='{{{metaFrom.thumb.relativeUrl}}}']:not([data-media-replaced]) {
     display: none;
   }
 
   {{/replacers}}
   {{#hiders}}
+  /* Скрываем оригинальные медиа-файлы */
   figure.post__image:has(img[src='{{{metaFrom.thumb.relativeUrl}}}']:not([data-media-replaced])) {
     display: none;
   }
